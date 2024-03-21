@@ -36,7 +36,7 @@ func main() {
 
 	// CORS middleware'inin eklenmesi
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http:localhost:3000"}, // working address of the frontend
+		AllowedOrigins:   []string{"http://localhost:3000"}, // working address of the frontend
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowCredentials: true,
 	})

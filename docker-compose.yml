@@ -11,6 +11,21 @@ services:
       - "8080:8080"
     depends_on:
       - go_db
+  react-frontend:
+    container_name: react-frontend
+    build: ./frontend
+    volumes:
+      - ./frontend/src:/app/src 
+      - ./frontend/public:/app/public
+      - ./frontend/node_modules:/app/node_modules
+    stdin_open: true
+    tty: true
+    ports:
+      - "3000:3000"
+    environment:
+      - CHOKIDAR_USEPOLLING=true 
+    depends_on:
+      - go-backend
   go-script:
     container_name: go-script
     image: ouzzkp/go-script:1.0.0

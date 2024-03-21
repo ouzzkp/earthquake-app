@@ -20,11 +20,13 @@ type Earthquake struct {
 }
 
 // generateCoord generates a random coordinate in degrees, minutes, and seconds
-func generateCoord() string {
-	degrees := rand.Intn(180) - 90
-	minutes := rand.Intn(60)
-	seconds := rand.Float64() * 60
-	return fmt.Sprintf("%d°%d'%4.2f''", degrees, minutes, seconds)
+func generateLatitude() string {
+	return fmt.Sprintf("%d", rand.Intn(241)-120) // -90 ile +90 arasında rastgele bir değer üretir
+}
+
+// generateLongitude generates a random longitude between -120 and +120
+func generateLongitude() string {
+	return fmt.Sprintf("%d", rand.Intn(241)-120) // -120 ile +120 arasında rastgele bir değer üretir
 }
 
 func main() {
@@ -42,8 +44,8 @@ func main() {
 
 	for range ticker.C {
 		quake := Earthquake{
-			Latitude:  generateCoord(),
-			Longitude: generateCoord(),
+			Latitude:  generateLatitude(),
+			Longitude: generateLongitude(),
 			Magnitude: rand.Float64() * 10,
 			Time:      time.Now().Format(time.RFC3339),
 		}
