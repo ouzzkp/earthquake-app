@@ -1,0 +1,35 @@
+version: '3.9'
+
+services:
+  go-backend:
+    container_name: go-backend
+    image: ouzzkp/go-backend:1.0.0
+    build: ./backend
+    environment:
+      DATABASE_URL: "host=go_db user=postgres password=postgres dbname=go_db sslmode=disable"
+    ports:
+      - "8080:8080"
+    depends_on:
+      - go_db
+  go-script:
+    container_name: go-script
+    image: ouzzkp/go-scripts:1.0.0
+    build: ./script
+    environment:
+      BACKEND_URL: "http://go-backend:8080"
+    depends_on:
+      - go_db
+  go_db:
+    container_name: go_db
+    image: postgres:12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: go_db
+    ports:
+      - "5432:5432"    
+    volumes:
+      - pgData:/var/lib/postgresql/data
+
+volumes:
+  pgData: {}
