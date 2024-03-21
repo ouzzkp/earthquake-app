@@ -1,17 +1,17 @@
-# Go base image
-FROM golang:1.16-alpine
+# use official Golang image as base image
+FROM golang:1.16.3-alpine3.13
 
-# Çalışma dizinini ayarla
-WORKDIR /app
+# Set the Current Working Directory inside the container
+WORKDIR /script-app
 
-# Kaynak kodu kopyala
+# Copy the source code from the current directory to the Working Directory inside the container
 COPY . .
 
-# Bağımlılıkları indir (eğer varsa)
-RUN go mod download
+# Download and install any required third party dependencies into the container
+RUN go get -d -v ./...
 
-# Script'i derle
-RUN go build -o script main.go
+# Build the Go app
+RUN go build -o script-app .
 
-# Script'i çalıştır
-CMD ["./script"]
+# Run the executable
+CMD [ "./script-app" ]

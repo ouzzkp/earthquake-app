@@ -1,10 +1,9 @@
 package repository
 
 import (
+	"backend/internal/domain"
 	"database/sql"
 	"fmt"
-
-	"github.com/ouzzkp/earthquake-app/backend/internal/domain"
 )
 
 // EarthquakeRepository defines the interface for earthquake data access
