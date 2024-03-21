@@ -31,7 +31,8 @@ func main() {
 
 	// Routes'ların ayarlanması
 	router := mux.NewRouter()
-	routes.SetupEarthquakeRoutes(earthquakeHandler)
+	earthquakeRoutes := routes.SetupEarthquakeRoutes(earthquakeHandler) // Earthquake route'larını al
+	router.PathPrefix("/").Handler(earthquakeRoutes)                    // Ana router'a earthquake route'larını ekle
 
 	// CORS middleware'inin eklenmesi
 	c := cors.New(cors.Options{

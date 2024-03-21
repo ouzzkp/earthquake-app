@@ -2,7 +2,7 @@
 FROM golang:1.16.3-alpine3.13
 
 # Set the Current Working Directory inside the container
-WORKDIR /script-app
+WORKDIR /script
 
 # Copy the source code from the current directory to the Working Directory inside the container
 COPY . .
@@ -11,7 +11,9 @@ COPY . .
 RUN go get -d -v ./...
 
 # Build the Go app
-RUN go build -o script-app .
+RUN go build -o script 
+
+RUN chmod +x ./script
 
 # Run the executable
-CMD [ "./script-app" ]
+CMD [ "./script" ]

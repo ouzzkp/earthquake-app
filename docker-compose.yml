@@ -13,12 +13,10 @@ services:
       - go_db
   go-script:
     container_name: go-script
-    image: ouzzkp/go-scripts:1.0.0
+    image: ouzzkp/go-script:1.0.0
     build: ./script
     environment:
       BACKEND_URL: "http://go-backend:8080"
-    depends_on:
-      - go_db
   go_db:
     container_name: go_db
     image: postgres:12

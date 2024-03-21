@@ -1,11 +1,13 @@
-package script
+package main
 
 import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"log"
 	"math/rand"
 	"net/http"
+	"os"
 	"time"
 )
 
@@ -17,22 +19,29 @@ type Earthquake struct {
 	Time      string  `json:"Time"`
 }
 
-// generateCoord generates a random coordinate
+// generateCoord generates a random coordinate in degrees, minutes, and seconds
 func generateCoord() string {
 	degrees := rand.Intn(180) - 90
 	minutes := rand.Intn(60)
 	seconds := rand.Float64() * 60
-
 	return fmt.Sprintf("%d°%d'%4.2f''", degrees, minutes, seconds)
 }
 
 func main() {
+	// Random seed initialization
 	rand.Seed(time.Now().UnixNano())
-	ticker := time.NewTicker(5 * time.Second)
+	// Ticker for periodic execution
+	ticker := time.NewTicker(10 * time.Second)
+	defer ticker.Stop()
 
-	for _ = range ticker.C {
+	// Get the backend URL from the environment variable
+	backendURL := os.Getenv("BACKEND_URL")
+	if backendURL == "" {
+		log.Fatal("BACKEND_URL environment variable is not set.")
+	}
+
+	for range ticker.C {
 		quake := Earthquake{
-			Id:        rand.Intn(1000),
 			Latitude:  generateCoord(),
 			Longitude: generateCoord(),
 			Magnitude: rand.Float64() * 10,
@@ -41,17 +50,20 @@ func main() {
 
 		jsonData, err := json.Marshal(quake)
 		if err != nil {
-			fmt.Println("JSON marshalling error:", err)
+			log.Println("Error marshalling JSON:", err)
 			continue
 		}
 
-		resp, err := http.Post("http://localhost:3852/api/createEarthquake", "application/json", bytes.NewBuffer(jsonData))
+		// Use the BACKEND_URL environment variable to construct the request URL
+		requestURL := fmt.Sprintf("%s/earthquakes", backendURL)
+		resp, err := http.Post(requestURL, "application/json", bytes.NewBuffer(jsonData))
 		if err != nil {
-			fmt.Println("POST request error:", err)
+			log.Println("Error sending POST request:", err)
 			continue
 		}
+
 		defer resp.Body.Close()
 
-		fmt.Printf("Earthquake data sent: %+v\n", quake)
+		log.Printf("Earthquake data sent: %+v\n", quake)
 	}
 }
