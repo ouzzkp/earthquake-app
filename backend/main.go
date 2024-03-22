@@ -16,25 +16,24 @@ import (
 )
 
 func main() {
-	// PostgreSQL'e bağlan
-	connStr := os.Getenv("DATABASE_URL") // DATABASE_URL ortam değişkeninden alınır
+	connStr := os.Getenv("DATABASE_URL")
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
 		log.Fatal("Veritabanına bağlanırken hata oluştu:", err)
 	}
 	defer db.Close()
 
-	// EarthquakeRepository, Service ve Handlers'ın oluşturulması
+	// create earthquake repository, service and handler
 	earthquakeRepo := repository.NewEarthquakeRepository(db)
 	earthquakeService := service.NewEarthquakeService(earthquakeRepo)
 	earthquakeHandler := handlers.NewEarthquakeHandler(earthquakeService)
 
-	// Routes'ların ayarlanması
+	// router setup
 	router := mux.NewRouter()
-	earthquakeRoutes := routes.SetupEarthquakeRoutes(earthquakeHandler) // Earthquake route'larını al
-	router.PathPrefix("/").Handler(earthquakeRoutes)                    // Ana router'a earthquake route'larını ekle
+	earthquakeRoutes := routes.SetupEarthquakeRoutes(earthquakeHandler)
+	router.PathPrefix("/").Handler(earthquakeRoutes)
 
-	// CORS middleware'inin eklenmesi
+	// cors middleware
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:3000"}, // working address of the frontend
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
@@ -42,7 +41,5 @@ func main() {
 	})
 	handler := c.Handler(router)
 
-	// HTTP sunucusunun başlatılması
-	log.Println("Server port 8080 üzerinde başlatılıyor...")
 	log.Fatal(http.ListenAndServe(":8080", handler))
 }

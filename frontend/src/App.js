@@ -15,9 +15,7 @@ const geoUrl = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json";
 
 function App() {
   const [content, setContent] = useState("");
-  const [markers, setMarkers] = useState([
-    // Başlangıçta sabit işaretçiler burada listelenebilir veya boş bir dizi kullanılabilir.
-  ]);
+  const [markers, setMarkers] = useState([]);
 
   useEffect(() => {
     const fetchEarthquakeData = async () => {
@@ -26,11 +24,10 @@ function App() {
         console.log(response);
         const data = await response.json();
         const newMarkers = data.map(earthquake => ({
-          markerOffset: 25, // Sabit bir değer, gerekirse değiştirilebilir
-          name: `Earthquake ${earthquake.id}`, // İsim için dinamik bir değer oluşturuldu
-          coordinates: [parseFloat(earthquake.Longitude), parseFloat(earthquake.Latitude)], // String olarak gelen koordinat değerlerini float'a çevir
+          markerOffset: 25, 
+          name: `Earthquake ${earthquake.id}`,
+          coordinates: [parseFloat(earthquake.Longitude), parseFloat(earthquake.Latitude)], 
         }));
-        // Dönüştürülmüş verileri mevcut markers listesine ekleyin
         setMarkers(prevMarkers => [...prevMarkers, ...newMarkers]);
       } catch (error) {
         console.error("Error fetching earthquake data:", error);
@@ -38,9 +35,9 @@ function App() {
     };
   
     fetchEarthquakeData();
-    const interval = setInterval(fetchEarthquakeData, 60000); // Her 60 saniyede bir tekrarla, milisaniye cinsinden
+    const interval = setInterval(fetchEarthquakeData, 60000); 
   
-    return () => clearInterval(interval); // Component unmount olduğunda interval temizliği
+    return () => clearInterval(interval); 
   }, []);
 
   return (
