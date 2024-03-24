@@ -4,14 +4,23 @@ import (
 	"backend/internal/domain"
 	"backend/internal/service"
 	"encoding/json"
+	"log"
 	"net/http"
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/gorilla/websocket"
 )
 
 type EarthquakeHandler struct {
 	earthquakeService service.EarthquakeService
+}
+
+var clients = make(map[*websocket.Conn]bool) // WebSocket clients
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(r *http.Request) bool {
+		return true
+	},
 }
 
 func NewEarthquakeHandler(earthquakeService service.EarthquakeService) *EarthquakeHandler {
@@ -62,6 +71,16 @@ func (eh *EarthquakeHandler) CreateEarthquake(w http.ResponseWriter, r *http.Req
 		return
 	}
 
+	// if earthquake magnitude is greater than 5, send it to clients (anomaly detection)
+	if earthquake.Magnitude > 5 {
+		jsonData, err := json.Marshal(earthquake)
+		if err != nil {
+			log.Printf("Error marshalling earthquake data: %v", err)
+		} else {
+			BroadcastToClients(jsonData)
+		}
+	}
+
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(earthquake)
@@ -76,13 +95,11 @@ func (eh *EarthquakeHandler) UpdateEarthquake(w http.ResponseWriter, r *http.Req
 
 	params := mux.Vars(r)
 	earthquake.Id, _ = strconv.Atoi(params["id"])
-
 	err := eh.earthquakeService.UpdateEarthquake(earthquake)
 	if err != nil {
 		http.Error(w, "Error updating earthquake", http.StatusInternalServerError)
 		return
 	}
-
 	w.WriteHeader(http.StatusNoContent)
 }
 
@@ -99,6 +116,34 @@ func (eh *EarthquakeHandler) DeleteEarthquake(w http.ResponseWriter, r *http.Req
 		http.Error(w, "Error deleting earthquake", http.StatusInternalServerError)
 		return
 	}
-
 	w.WriteHeader(http.StatusNoContent)
+}
+
+func (eh *EarthquakeHandler) WebSocketHandler(w http.ResponseWriter, r *http.Request) {
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println("Could not upgrade to WebSocket:", err)
+		return
+	}
+	defer conn.Close()
+	clients[conn] = true
+
+	for {
+		_, _, err := conn.ReadMessage()
+		if err != nil {
+			log.Printf("Error: %v", err)
+			delete(clients, conn)
+			break
+		}
+	}
+}
+
+func BroadcastToClients(message []byte) {
+	for conn := range clients {
+		if err := conn.WriteMessage(websocket.TextMessage, message); err != nil {
+			log.Printf("Websocket error: %s", err)
+			conn.Close()
+			delete(clients, conn)
+		}
+	}
 }

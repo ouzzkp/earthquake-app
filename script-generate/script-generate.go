@@ -19,24 +19,19 @@ type Earthquake struct {
 	Time      string  `json:"Time"`
 }
 
-// generateCoord generates a random coordinate in degrees, minutes, and seconds
 func generateLatitude() string {
-	return fmt.Sprintf("%d", rand.Intn(241)-120) // -90 ile +90 arasında rastgele bir değer üretir
+	return fmt.Sprintf("%d", rand.Intn(241)-120)
 }
 
-// generateLongitude generates a random longitude between -120 and +120
 func generateLongitude() string {
-	return fmt.Sprintf("%d", rand.Intn(241)-120) // -120 ile +120 arasında rastgele bir değer üretir
+	return fmt.Sprintf("%d", rand.Intn(241)-120)
 }
 
 func main() {
-	// Random seed initialization
 	rand.Seed(time.Now().UnixNano())
-	// Ticker for periodic execution
 	ticker := time.NewTicker(10 * time.Second)
 	defer ticker.Stop()
 
-	// Get the backend URL from the environment variable
 	backendURL := os.Getenv("BACKEND_URL")
 	if backendURL == "" {
 		log.Fatal("BACKEND_URL environment variable is not set.")
@@ -56,7 +51,6 @@ func main() {
 			continue
 		}
 
-		// Use the BACKEND_URL environment variable to construct the request URL
 		requestURL := fmt.Sprintf("%s/earthquakes", backendURL)
 		resp, err := http.Post(requestURL, "application/json", bytes.NewBuffer(jsonData))
 		if err != nil {

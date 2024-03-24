@@ -32,6 +32,7 @@ func main() {
 	router := mux.NewRouter()
 	earthquakeRoutes := routes.SetupEarthquakeRoutes(earthquakeHandler)
 	router.PathPrefix("/").Handler(earthquakeRoutes)
+	router.HandleFunc("/ws", earthquakeHandler.WebSocketHandler)
 
 	// cors middleware
 	c := cors.New(cors.Options{

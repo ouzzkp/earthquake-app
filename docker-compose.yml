@@ -49,10 +49,16 @@ services:
       - CHOKIDAR_USEPOLLING=true 
     depends_on:
       - go-backend
-  go-script:
-    container_name: go-script
-    image: ouzzkp/go-script:1.0.0
-    build: ./script
+  go-script-generate:
+    container_name: go-script-generate
+    image: ouzzkp/go-script-generate:1.0.0
+    build: ./script-generate
+    environment:
+      BACKEND_URL: "http://go-backend:8080"
+  go-script-input:
+    container_name: go-script-input
+    image: ouzzkp/go-script-input:1.0.0
+    build: ./script-input
     environment:
       BACKEND_URL: "http://go-backend:8080"
   go_db:
