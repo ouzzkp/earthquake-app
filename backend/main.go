@@ -23,20 +23,17 @@ func main() {
 	}
 	defer db.Close()
 
-	// create earthquake repository, service and handler
 	earthquakeRepo := repository.NewEarthquakeRepository(db)
 	earthquakeService := service.NewEarthquakeService(earthquakeRepo)
 	earthquakeHandler := handlers.NewEarthquakeHandler(earthquakeService)
 
-	// router setup
 	router := mux.NewRouter()
 	earthquakeRoutes := routes.SetupEarthquakeRoutes(earthquakeHandler)
 	router.PathPrefix("/").Handler(earthquakeRoutes)
 	router.HandleFunc("/ws", earthquakeHandler.WebSocketHandler)
 
-	// cors middleware
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"http://localhost:3000"}, // working address of the frontend
+		AllowedOrigins:   []string{"http://localhost:3000"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE"},
 		AllowCredentials: true,
 	})

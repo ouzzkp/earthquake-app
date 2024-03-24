@@ -36,38 +36,4 @@
     transform: rotate(360deg);
   }
 }
-/* Container Stilleri */
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh; /* Viewport yüksekliği ile aynı */
-  width: 100vw;
-}
 
-.map-section,
-.earthquake-list-section {
-  overflow: auto; /* İçerik fazlaysa kaydırmaya izin ver */
-  padding: 20px;
-}
-
-.map-section {
-  flex: 3; /* Harita bölümüne daha fazla yer ayır */
-}
-
-.earthquake-list-section {
-  flex: 1; /* Deprem listesi için daha az yer */
-  background-color: #f7f7f7;
-}
-
-@media (min-width: 768px) {
-  /* Orta ve büyük ekranlar için stil ayarları */
-  .container {
-    flex-direction: row; /* Ekran geniş ise yatay sıralama */
-  }
-
-  .map-section,
-  .earthquake-list-section {
-    height: auto; /* Flexbox yönetimine bırak */
-    max-height: 100vh; /* Maksimum yükseklik viewport ile sınırlı */
-  }
-}

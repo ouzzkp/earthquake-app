@@ -50,7 +50,6 @@ func main() {
 	}
 	defer resp.Body.Close()
 
-	// Cevap loglanıyor.
 	body := &bytes.Buffer{}
 	_, err = body.ReadFrom(resp.Body)
 	if err != nil {

@@ -19,7 +19,6 @@ type earthquakeRepository struct {
 	db *sql.DB
 }
 
-// NewEarthquakeRepository creates a new instance of earthquakeRepository
 func NewEarthquakeRepository(db *sql.DB) EarthquakeRepository {
 	return &earthquakeRepository{
 		db: db,
