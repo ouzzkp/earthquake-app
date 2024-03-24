@@ -123,7 +123,7 @@ function App() {
       </div>
 
       <div style={{ flex: 1, padding: '1rem' }}>
-        <h2 style={{ textAlign: 'center', margin: '0 0 1rem 0' }}>Previos Earthquake List</h2>
+        <h2 style={{ textAlign: 'center', margin: '0 0 1rem 0' }}>Previous Earthquake List</h2>
         <div style={{ overflowY: 'auto', height: 'calc(100% - 3rem)', border: '1px solid #ddd' }}> 
           {earthquakes.map(({ id, name, coordinates }) => (
             <div key={id} style={{
