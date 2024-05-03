@@ -1,33 +1,33 @@
-# Deprem İzleme Sistemi
+# Earthquake Monitoring System
 
-Bu proje, gerçek zamanlı olarak deprem verilerini toplar, işler ve anormal depremleri bir harita üzerinde gösterir.
+This project collects, processes, and displays earthquake data in real-time, highlighting abnormal earthquakes on a map.
 
-## Başlangıç
+## Getting Started
 
-Bu projeyi yerel geliştirme ortamınızda çalıştırmak için aşağıdaki adımları izleyin.
+Follow these steps to run this project in your local development environment.
 
-### Önkoşullar
+### Prerequisites
 
 - Docker
 
-### Kurulum
+### Installation
 
-#### 1. Projeyi yerel makinenize klonlayın:
+#### 1. Clone the project to your local machine:
 
 ```bash
 git clone hhttps://github.com/ouzzkp/earthquake-app
 cd earthquake-app
 ```
-#### Docker ile projeyi başlatın:
+#### Start the project with Docker:
 ```bash
 docker-compose up --build
 ```
- Bu komut, gereken tüm servisleri Docker container'larında başlatır. Backend servisi localhost:8080 üzerinde çalışır.
+This command starts all the required services in Docker containers. The backend service runs on localhost:8080.
 
 
-## API Kullanımı
+## API Usage
 
-#### Tüm Depremleri Listele
+#### List All Earthquakes
 
 ```http
   GET /api/earthquakes
@@ -38,7 +38,7 @@ docker-compose up --build
 | :-------- | :------- | :------------------------- |
 | `api_key` | `string` | **Gerekli**. API anahtarınız. |
 
-#### Tek Bir Depremi getir
+#### Get a Single Earthquake
 
 ```http
   GET /api/earthquakes/{id}
@@ -49,7 +49,7 @@ docker-compose up --build
 | `id`      | `int` | **Gerekli**. Depremin benzersiz ID'si. | 
 | `api_key`      | `string` | **Gerekli**. API anahtarınız. |
 
-#### Yeni Bir Deprem Ekleme
+#### Add a New Earthquake
 
 ```http
   POST /api/earthquakes
@@ -63,7 +63,7 @@ docker-compose up --build
 | `Time`      | `string` | **Gerekli**. Depremin zamanı. |
 | `api_key`      | `string` | **Gerekli**. API anahtarınız. |
 
-#### Deprem Verisini Güncelle
+#### Update Earthquake Data
 
 ```http
   PUT /api/earthquakes/{id}
@@ -74,7 +74,7 @@ docker-compose up --build
 | `id`      | `int` | **Gerekli**. Depremin benzersiz ID'si. | 
 | `api_key`      | `string` | **Gerekli**. API anahtarınız. |
 
-#### Deprem Verisini Silme
+#### Delete Earthquake Data
 
 ```http
   DELETE /api/earthquakes/{id}
@@ -87,18 +87,18 @@ docker-compose up --build
 
 
 
-## Kullanılan Teknolojiler
+## Technologies Used
 
 **Backend:**
 
-- Go (Golang): Sunucu tarafı mantığını oluşturma, HTTP isteklerini işleme, veritabanı ile etkileşim ve gerçek zamanlı veri aktarımı için WebSocket kullanımı.
-- PostgreSQL: Deprem verilerini depolamak ve yönetmek için tercih edilen ilişkisel veritabanı.
-- WebSocket: Sunucu ile istemci arasında gerçek zamanlı iletişim sağlamak, özellikle yeni deprem bilgilerinin anında yayınlanması için kullanılır.
+- Go (Golang): Used to build the server-side logic, handle HTTP requests, interact with the database, and employ WebSockets for real-time data transmission.
+- PostgreSQL: The relational database chosen for storing and managing earthquake data.
+- WebSocket: Used for real-time communication between server and client, particularly for broadcasting new earthquake information instantly.
 
 
 **Frontend:** 
 
-- React: Kullanıcı arayüzünü oluşturmak için kullanılan bir JavaScript kütüphanesi, özellikle haritada deprem verilerini gösterme ve bu bilgileri gerçek zamanlı olarak güncelleme.
-- react-simple-maps: Haritayı render etmek ve üzerine deprem işaretçileri yerleştirmek için kullanılan React bileşen kütüphanesi.
+- React: A JavaScript library used to build the user interface, especially for displaying earthquake data on the map and updating it in real-time.
+- react-simple-maps: A React component library used to render the map and place earthquake markers on it.
 
   
