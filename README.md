@@ -36,7 +36,7 @@ This command starts all the required services in Docker containers. The backend 
 
 | Parametre | Tip     | Açıklama                |
 | :-------- | :------- | :------------------------- |
-| `api_key` | `string` | **Gerekli**. API anahtarınız. |
+| `api_key` | `string` | **Required**. Your API key. |
 
 #### Get a Single Earthquake
 
@@ -46,8 +46,8 @@ This command starts all the required services in Docker containers. The backend 
 
 | Parametre | Tip     | Açıklama                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Gerekli**. Depremin benzersiz ID'si. | 
-| `api_key`      | `string` | **Gerekli**. API anahtarınız. |
+| `id`      | `int` | **Required**. Unique ID of the earthquake. | 
+| `api_key`      | `string` | **Required**. Your API key. |
 
 #### Add a New Earthquake
 
@@ -57,11 +57,11 @@ This command starts all the required services in Docker containers. The backend 
 
 | Parametre | Tip     | Açıklama                       |
 | :-------- | :------- | :-------------------------------- |
-| `Latitude`      | `string` | **Gerekli**. Depremin enlemi. | 
-| `Longitude`      | `string` | **Gerekli**. Depremin boylamı. |
-| `Magnitude`      | `float` | **Gerekli**.  Depremin şiddeti. | 
-| `Time`      | `string` | **Gerekli**. Depremin zamanı. |
-| `api_key`      | `string` | **Gerekli**. API anahtarınız. |
+| `Latitude`      | `string` | **Required**. Latitude of the earthquake. | 
+| `Longitude`      | `string` | **Required**. Longitude of the earthquake. |
+| `Magnitude`      | `float` | **Required**.  Magnitude of the earthquake. | 
+| `Time`      | `string` | **Required**. Time of the earthquake. |
+| `api_key`      | `string` | **Required**. Your API key. |
 
 #### Update Earthquake Data
 
@@ -71,8 +71,8 @@ This command starts all the required services in Docker containers. The backend 
 
 | Parametre | Tip     | Açıklama                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Gerekli**. Depremin benzersiz ID'si. | 
-| `api_key`      | `string` | **Gerekli**. API anahtarınız. |
+| `id`      | `int` | **Required**. Unique ID of the earthquake. | 
+| `api_key`      | `string` | **Required**. Your API key. |
 
 #### Delete Earthquake Data
 
@@ -82,8 +82,8 @@ This command starts all the required services in Docker containers. The backend 
 
 | Parametre | Tip     | Açıklama                       |
 | :-------- | :------- | :-------------------------------- |
-| `id`      | `int` | **Gerekli**. Depremin benzersiz ID'si. | 
-| `api_key`      | `string` | **Gerekli**. API anahtarınız. |
+| `id`      | `int` | **Required**. Unique ID of the earthquake. | 
+| `api_key`      | `string` | **Required**. Your API key. |
 
 
 
