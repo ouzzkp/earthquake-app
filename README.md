@@ -34,7 +34,7 @@ This command starts all the required services in Docker containers. The backend 
 
 ```
 
-| Parametre | Tip     | Açıklama                |
+| Parameter | Type     | Description                |
 | :-------- | :------- | :------------------------- |
 | `api_key` | `string` | **Required**. Your API key. |
 
@@ -44,7 +44,7 @@ This command starts all the required services in Docker containers. The backend 
   GET /api/earthquakes/{id}
 ```
 
-| Parametre | Tip     | Açıklama                       |
+| Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int` | **Required**. Unique ID of the earthquake. | 
 | `api_key`      | `string` | **Required**. Your API key. |
@@ -55,7 +55,7 @@ This command starts all the required services in Docker containers. The backend 
   POST /api/earthquakes
 ```
 
-| Parametre | Tip     | Açıklama                       |
+| Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `Latitude`      | `string` | **Required**. Latitude of the earthquake. | 
 | `Longitude`      | `string` | **Required**. Longitude of the earthquake. |
@@ -69,7 +69,7 @@ This command starts all the required services in Docker containers. The backend 
   PUT /api/earthquakes/{id}
 ```
 
-| Parametre | Tip     | Açıklama                       |
+| Parameter | Type     | Description                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int` | **Required**. Unique ID of the earthquake. | 
 | `api_key`      | `string` | **Required**. Your API key. |
@@ -80,7 +80,7 @@ This command starts all the required services in Docker containers. The backend 
   DELETE /api/earthquakes/{id}
 ```
 
-| Parametre | Tip     | Açıklama                       |
+| Parameter | Type     | Açıklama                       |
 | :-------- | :------- | :-------------------------------- |
 | `id`      | `int` | **Required**. Unique ID of the earthquake. | 
 | `api_key`      | `string` | **Required**. Your API key. |
